@@ -15,7 +15,7 @@ import javax.validation.constraints.NotBlank;
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Column
@@ -61,6 +61,8 @@ public class Book {
     public long getId() {
         return id;
     }
+
+    // Getters and setters:
 
     public String getGenre() {
         return genre;
