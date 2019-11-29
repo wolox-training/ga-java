@@ -62,12 +62,6 @@ public class Book {
         return id;
     }
 
-    // Getters and setters:
-
-    public long getId() {
-        return id;
-    }
-
     public String getGenre() {
         return genre;
     }
