@@ -5,5 +5,5 @@ import wolox.training.models.Book;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    Book findByName(String author);
+    Book findByAuthor(String author);
 }
