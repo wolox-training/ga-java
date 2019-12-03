@@ -75,6 +75,7 @@ public class BookController {
       throw new BookIdMismatchException("That book does not match that id", new Exception());
     }
     bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException("Book is not found", new Exception()));
+
     return bookRepository.save(book);
   }
 }
