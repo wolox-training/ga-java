@@ -7,8 +7,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
+/** Represents a book.
+ * @author German Asprino
+ */
+
 @Entity
 public class Book {
+
+    public Book (){}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
