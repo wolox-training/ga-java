@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @author German Asprino
  */
 
-@ResponseStatus(code = HttpStatus.NOT_ACCEPTABLE, reason = "Book Already Exist")
-public class BookAlreadyExistException extends RuntimeException {
+@ResponseStatus(code = HttpStatus.NOT_ACCEPTABLE, reason = "Book Id mismatch")
+public class BookIdMismatchException extends RuntimeException {
 
-    public BookAlreadyExistException(String message, Throwable cause) {
+    public BookIdMismatchException(String message, Throwable cause) {
         super(message, cause);
     }
 }
