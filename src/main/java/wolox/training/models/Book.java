@@ -7,6 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
+/** Represents a book.
+ * @author German Asprino
+ */
+
 @Entity
 public class Book {
 
@@ -49,6 +53,8 @@ public class Book {
     @Column
     @NotBlank(message = "Isbn is mandatory")
     private String isbn;
+
+    public Book (){}
 
     // Getters and setters:
 
