@@ -8,7 +8,7 @@ import wolox.training.models.Book;
  * @author German Asprino
  */
 
-public interface BookRepository extends JpaRepository<Optional, Long> {
+public interface BookRepository extends JpaRepository<Book, Long> {
 
     public Optional<Book> findByAuthor(String author);
     public Book findByTitle(String title);
