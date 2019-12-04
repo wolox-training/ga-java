@@ -10,4 +10,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface BookRepository extends JpaRepository<Optional, Long> {
 
     Optional findByAuthor(String author);
+    public Book findByTitle(String title);
 }
