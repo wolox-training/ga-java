@@ -1,11 +1,16 @@
 package wolox.training.models;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotBlank;
+import wolox.training.exceptions.BookAlreadyOwnedException;
+import wolox.training.exceptions.BookNotOwnedException;
 
 /** Represents a book.
  * @author German Asprino
@@ -53,6 +58,9 @@ public class Book {
     @Column
     @NotBlank(message = "Isbn is mandatory")
     private String isbn;
+
+    @ManyToMany(mappedBy = "books")
+    private List<User> users = new ArrayList<>();
 
     public Book (){}
 
@@ -132,5 +140,17 @@ public class Book {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    public void addUsers(User user) {
+        if (user == null){ throw new NullPointerException("User Cannot Be A Null");}
+        if (this.users.contains(user)){ throw new BookAlreadyOwnedException("User Already Owned this Book", new Exception()); }
+        this.users.add(user);
+    }
+
+    public void removeBook(User user) {
+        if (user == null){ throw new NullPointerException("User Cannot Be A Null");}
+        if (!this.users.contains(user)){ throw new BookNotOwnedException("Book Not Owned By This User", new Exception()); }
+        this.users.remove(user);
     }
 }

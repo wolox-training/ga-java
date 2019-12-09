@@ -2,6 +2,7 @@ package wolox.training.models;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,8 +15,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import wolox.training.exceptions.BookAlreadyOwnedException;
+import wolox.training.exceptions.BookNotOwnedException;
 
-/** Represents a user.
+/** Represents a user model.
  * @author German Asprino
  */
 
@@ -39,13 +42,11 @@ public class User {
     @NotBlank(message = "Birth date is mandatory")
     private LocalDate birthDate;
 
-    @ManyToMany(cascade = {CascadeType.MERGE})
-    @JoinTable(
-        name = "book_user",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "book_id")
-    )
-    private List<Book> books = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "book_user",
+        joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    private List<Book> books = new ArrayList<Book>();
 
     public User(){}
 
@@ -59,8 +60,8 @@ public class User {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserName(String name) {
+        this.userName = name;
     }
 
     public String getName() {
@@ -72,7 +73,7 @@ public class User {
     }
 
     public LocalDate getBirthDate() {
-        return birthDate;
+        return this.birthDate;
     }
 
     public void setBirthDate(LocalDate birthDate) {
@@ -80,6 +81,18 @@ public class User {
     }
 
     public List<Book> getBooks() {
-        return books;
+        return (List<Book>) Collections.unmodifiableList(this.books);
+    }
+
+    public void addBook(Book book){
+        if (book == null){ throw new NullPointerException("Book cannot be a null");}
+        if (this.books.contains(book)){ throw new BookAlreadyOwnedException("Book Already Owned", new Exception()); }
+        this.books.add(book);
+    }
+
+    public void removeBook(Book book){
+        if (book == null){ throw new NullPointerException("Book cannot be a null");}
+        if ( !this.books.contains(book) ){ throw new BookNotOwnedException("Book Not Owned By This User", new Exception()); }
+        this.books.remove(book);
     }
 }
