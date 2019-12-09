@@ -1,6 +1,7 @@
 package wolox.training.controllers;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -52,7 +53,7 @@ public class BookController {
   }
 
   @GetMapping("/author/{author}")
-  public List<Book> findByAuthor(@PathVariable String author) {
+  public Optional<Book> findByAuthor(@PathVariable String author) {
     return bookRepository.findByAuthor(author);
   }
 
