@@ -1,5 +1,7 @@
 package wolox.training.models;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,6 +25,7 @@ import wolox.training.exceptions.BookNotOwnedException;
  */
 
 @Entity
+@ApiModel(description = "User for wolox training java")
 @Table(name = "Users")
 public class User {
 
@@ -30,18 +33,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @ApiModelProperty(value = "Username for user", dataType = "String", example = "Hellfishg")
     @Column
     @NotBlank(message = "User Name is mandatory")
     private String userName;
 
+    @ApiModelProperty(value = "Name of the user", dataType = "String", example = "German Asprino")
     @Column
     @NotBlank(message = "Name is mandatory")
     private String name;
 
+    @ApiModelProperty(value = "User birth date", dataType = "LocalDate", example = "1920-01-26")
     @Column
     @NotBlank(message = "Birth date is mandatory")
     private LocalDate birthDate;
 
+    @ApiModelProperty(value = "Books rents for this user", dataType = "List<Book>", example = "list of book")
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book_user",
         joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
