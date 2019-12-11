@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotBlank;
+import jdk.internal.util.Preconditions;
 
 /** Represents a book.
  * @author German Asprino
@@ -73,6 +74,7 @@ public class Book {
     }
 
     public void setGenre(String genre) {
+        Preconditions.checkNotNull(genre, "Genre cannot be a null");
         this.genre = genre;
     }
 
@@ -81,6 +83,8 @@ public class Book {
     }
 
     public void setAuthor(String author) {
+        Preconditions.checkNotNull(author, "Author cannot be a null");
+
         this.author = author;
     }
 
@@ -89,6 +93,8 @@ public class Book {
     }
 
     public void setImage(String image) {
+        Preconditions.checkNotNull(image, "Image cannot be a null");
+
         this.image = image;
     }
 
@@ -97,6 +103,8 @@ public class Book {
     }
 
     public void setTitle(String title) {
+        Preconditions.checkNotNull(title, "Title cannot be a null");
+
         this.title = title;
     }
 
@@ -105,6 +113,8 @@ public class Book {
     }
 
     public void setSubtitle(String subtitle) {
+        Preconditions.checkNotNull(subtitle, "Subtitle cannot be a null");
+
         this.subtitle = subtitle;
     }
 
@@ -113,6 +123,7 @@ public class Book {
     }
 
     public void setPublisher(String publisher) {
+        Preconditions.checkNotNull(publisher, "Publisher cannot be a null");
         this.publisher = publisher;
     }
 
@@ -121,6 +132,7 @@ public class Book {
     }
 
     public void setYear(String year) {
+        Preconditions.checkNotNull(year, "Year cannot be a null");
         this.year = year;
     }
 
@@ -129,6 +141,7 @@ public class Book {
     }
 
     public void setPages(String pages) {
+        Preconditions.checkNotNull(pages, "Pages cannot be a null");
         this.pages = pages;
     }
 
@@ -137,6 +150,7 @@ public class Book {
     }
 
     public void setIsbn(String isbn) {
+        Preconditions.checkNotNull(isbn, "Isbn cannot be a null");
         this.isbn = isbn;
     }
 

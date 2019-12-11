@@ -15,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import jdk.internal.util.Preconditions;
 
 /** Represents a user model.
  * @author German Asprino
@@ -59,6 +60,7 @@ public class User {
     }
 
     public void setUserName(String name) {
+        Preconditions.checkNotNull(name, "UserName cannot be a null");
         this.userName = name;
     }
 
@@ -67,6 +69,8 @@ public class User {
     }
 
     public void setName(String name) {
+        Preconditions.checkNotNull(name, "Name cannot be a null");
+
         this.name = name;
     }
 
@@ -75,6 +79,8 @@ public class User {
     }
 
     public void setBirthDate(LocalDate birthDate) {
+        Preconditions.checkNotNull(birthDate, "Birth date cannot be a null");
+
         this.birthDate = birthDate;
     }
 
