@@ -144,13 +144,11 @@ public class Book {
 
     public void addUsers(User user) {
         if (user == null){ throw new NullPointerException("User Cannot Be A Null");}
-        if (this.users.contains(user)){ throw new BookAlreadyOwnedException("User Already Owned this Book", new Exception()); }
         this.users.add(user);
     }
 
     public void removeBook(User user) {
         if (user == null){ throw new NullPointerException("User Cannot Be A Null");}
-        if (!this.users.contains(user)){ throw new BookNotOwnedException("Book Not Owned By This User", new Exception()); }
         this.users.remove(user);
     }
 }
