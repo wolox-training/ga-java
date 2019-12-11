@@ -9,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotBlank;
-import wolox.training.exceptions.BookAlreadyOwnedException;
-import wolox.training.exceptions.BookNotOwnedException;
 
 /** Represents a book.
  * @author German Asprino
