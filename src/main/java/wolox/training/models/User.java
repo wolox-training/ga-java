@@ -30,7 +30,7 @@ import wolox.training.exceptions.BookNotOwnedException;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ApiModelProperty(value = "Username for user", dataType = "String", example = "Hellfishg")
