@@ -9,5 +9,4 @@ public class TrainnerInMavenApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TrainnerInMavenApplication.class, args);
 	}
-
 }
