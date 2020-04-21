@@ -2,6 +2,7 @@ package com.wolox.trainnerInMaven.controllers;
 
 import com.wolox.trainnerInMaven.models.Book;
 import com.wolox.trainnerInMaven.models.User;
+import com.wolox.trainnerInMaven.repositories.BookRepository;
 import com.wolox.trainnerInMaven.repositories.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +23,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserController.class)
 public class UserControllerTest {
@@ -34,10 +34,13 @@ public class UserControllerTest {
     private UserRepository mockUserRepository;
 
     @MockBean
+    private BookRepository mockBookRepository;
+
+    @MockBean
     private User oneTestUser;
+
+    @MockBean
     private Book oneTestBook;
-
-
 
     @Before
     public void setUp() {
@@ -78,6 +81,5 @@ public class UserControllerTest {
                 .andExpect(jsonPath("name", is(oneTestUser.getName())))
                 .andExpect(jsonPath("birthDate", is(oneTestUser.getBirthDate().toString())))
         ;
-
     }
 }
