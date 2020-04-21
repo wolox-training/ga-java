@@ -14,6 +14,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
 import java.time.LocalDate;
@@ -64,7 +66,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void whenDeleteUserWhichExists_thenOkResponse() throws Exception {
+    public void whenGetUserWhichExists_thenOkResponse() throws Exception {
         Mockito.when(mockUserRepository.findFirstByUserName("Silver")).thenReturn(Optional.ofNullable(oneTestUser));
         mvc.perform(get("/api/users/name/Silver")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -74,12 +76,27 @@ public class UserControllerTest {
     @Test
     public void whenFindByIdWhichExists_thenUserIsReturned() throws Exception {
         Mockito.when(mockUserRepository.findById(1L)).thenReturn(Optional.ofNullable(oneTestUser));
+        Mockito.when(mockBookRepository.findById(1L)).thenReturn(Optional.ofNullable(oneTestBook));
         mvc.perform(get("/api/users/1")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
                 .andExpect(jsonPath("userName", is(oneTestUser.getUserName())))
                 .andExpect(jsonPath("name", is(oneTestUser.getName())))
                 .andExpect(jsonPath("birthDate", is(oneTestUser.getBirthDate().toString())))
         ;
+    }
+
+    @Test
+    public void whenGetUserByNameEmpty_thenReturnBadRequest() throws Exception{
+        mvc.perform(get("/api/users/name/")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void whenGetUserWhichExists_thenUserNotFound() throws Exception {
+        Mockito.when(mockUserRepository.findById(4L)).thenReturn(Optional.empty());
+        mvc.perform(get("/api/users/4")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 }

@@ -42,4 +42,21 @@ public class UserRepositoryTest {
         User userExist = userRepository.findFirstByUserName(oneTestUser.getUserName()).get();
         Assertions.assertEquals(userExist.getUserName(), oneTestUser.getUserName());
     }
+
+    @Test
+    public void whenSetUserWithoutUsername_thenThrowException() {
+        Assertions.assertThrows(NullPointerException.class, () -> oneTestUser.setUserName(null));
+    }
+
+    @Test
+    public void whenCreateUserWithEmptyName_thenThrowException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> oneTestUser.setUserName(""));
+    }
+
+    @Test
+    public void whenCreateUser_thenUserIsPersisted() {
+        User persistedUser = userRepository.findFirstByUserName(oneTestUser.getUserName())
+                .orElse(new User());
+        Assertions.assertEquals(persistedUser.getUserName(), oneTestUser.getUserName());
+    }
 }
