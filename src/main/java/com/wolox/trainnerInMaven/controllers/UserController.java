@@ -1,5 +1,6 @@
 package com.wolox.trainnerInMaven.controllers;
 
+import com.wolox.trainnerInMaven.config.BCryptEncoder;
 import com.wolox.trainnerInMaven.exceptions.BookNotFoundException;
 import com.wolox.trainnerInMaven.exceptions.UserAlreadyExistException;
 import com.wolox.trainnerInMaven.exceptions.UserIdMismatchException;
@@ -32,6 +33,9 @@ public class UserController {
     @Autowired
     private BookRepository bookRepository;
 
+    @Autowired
+    private BCryptEncoder bCryptEncoder;
+
     @GetMapping("/{id}")
     public User findById(@PathVariable Long id) {
         return usersRepository.findById(id).orElseThrow(() -> new UsersNotFoundException("User Not Found", new Exception()));
@@ -57,6 +61,7 @@ public class UserController {
         if(usersRepository.findById(user.getId()).isPresent()) {
             throw new UserAlreadyExistException("User already exist", new Exception());
         }
+        user.setPassword(bCryptEncoder.passwordEncoder().encode(user.getPassword()));
         return usersRepository.save(user);
     }
 

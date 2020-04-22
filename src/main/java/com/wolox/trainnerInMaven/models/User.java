@@ -40,6 +40,11 @@ public class User {
     @NotBlank(message = "User Name is mandatory")
     private String userName;
 
+    @ApiModelProperty(value = "password for user", dataType = "String", example = "1234")
+    @Column
+    @NotBlank(message = "User password is mandatory")
+    private String password;
+
     @ApiModelProperty(value = "Name of the user", dataType = "String", example = "German Asprino")
     @Column
     @NotBlank(message = "Name is mandatory")
@@ -76,6 +81,16 @@ public class User {
         Preconditions.checkNotNull(userName, "User name cannot be null");
         Preconditions.checkArgument(!StringUtils.isEmpty(userName), "User name cannot be empty");
         this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        Preconditions.checkNotNull(password, "User password cannot be null");
+        Preconditions.checkArgument(!StringUtils.isEmpty(password), "User password cannot be empty");
+        this.password = password;
     }
 
     public String getName() {

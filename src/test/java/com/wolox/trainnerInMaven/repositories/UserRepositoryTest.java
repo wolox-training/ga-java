@@ -31,6 +31,7 @@ public class UserRepositoryTest {
     public void setUp() {
         oneTestUser = new User();
         oneTestUser.setUserName("Ramiro");
+        oneTestUser.setPassword("1234");
         oneTestUser.setName("Ramiro Selton");
         oneTestUser.setBirthDate(LocalDate.parse("1999-03-27"));
         entityManager.persist(oneTestUser);
