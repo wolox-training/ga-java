@@ -5,6 +5,7 @@ import com.google.common.base.Preconditions;
 import com.wolox.trainnerInMaven.exceptions.BookAlreadyOwnedException;
 import com.wolox.trainnerInMaven.exceptions.BookNotOwnedException;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.util.StringUtils;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -72,6 +73,8 @@ public class User {
 
 
     public void setUserName(String userName) {
+        Preconditions.checkNotNull(userName, "User name cannot be null");
+        Preconditions.checkArgument(!StringUtils.isEmpty(userName), "User name cannot be empty");
         this.userName = userName;
     }
 
