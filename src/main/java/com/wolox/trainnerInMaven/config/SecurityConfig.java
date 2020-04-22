@@ -16,7 +16,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private BCryptEncoder bCryptEncoder;
 
     @Autowired
-    private UserService userDetailsService;
+    private AuthenticationProvider userDetailsService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
