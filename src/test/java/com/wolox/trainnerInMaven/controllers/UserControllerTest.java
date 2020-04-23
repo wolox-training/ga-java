@@ -1,5 +1,6 @@
 package com.wolox.trainnerInMaven.controllers;
 
+import com.wolox.trainnerInMaven.config.BCryptEncoder;
 import com.wolox.trainnerInMaven.models.Book;
 import com.wolox.trainnerInMaven.models.User;
 import com.wolox.trainnerInMaven.repositories.BookRepository;
@@ -9,11 +10,19 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MockMvcBuilder;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -26,11 +35,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(UserController.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserControllerTest {
 
-    @Autowired
     private MockMvc mvc;
+
+    @Autowired
+    private WebApplicationContext context;
 
     @MockBean
     private UserRepository mockUserRepository;
@@ -46,6 +57,10 @@ public class UserControllerTest {
 
     @Before
     public void setUp() {
+        mvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .build();
+
         oneTestBook = new Book();
         oneTestUser = new User();
 
@@ -60,6 +75,7 @@ public class UserControllerTest {
         oneTestBook.setYear("1915");
 
         oneTestUser.setUserName("Silver");
+        oneTestUser.setPassword("1234");
         oneTestUser.setName("Pedro Fleitas");
         oneTestUser.setBirthDate(LocalDate.parse("2020-08-23"));
         oneTestUser.addBook(oneTestBook);
