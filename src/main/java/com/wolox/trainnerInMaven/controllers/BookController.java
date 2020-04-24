@@ -4,6 +4,7 @@ import com.wolox.trainnerInMaven.exceptions.BookIdMismatchException;
 import com.wolox.trainnerInMaven.exceptions.BookNotFoundException;
 import com.wolox.trainnerInMaven.models.Book;
 import com.wolox.trainnerInMaven.repositories.BookRepository;
+import com.wolox.trainnerInMaven.service.OpenLibraryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -21,6 +22,9 @@ public class BookController {
 
   @Autowired
   private BookRepository bookRepository;
+
+  @Autowired
+  private OpenLibraryService openLibraryService;
 
   @GetMapping("/greeting")
   public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
@@ -68,5 +72,10 @@ public class BookController {
     }
     bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException("Book is not found", new Exception()));
     return bookRepository.save(book);
+  }
+
+  @GetMapping("/isbn/{isbn}")
+  public Book findByIsbn(@PathVariable String isbn) {
+    return bookRepository.findByIsbn(isbn).orElse(bookRepository.save(new Book(openLibraryService.bookInfo(isbn))));
   }
 }
