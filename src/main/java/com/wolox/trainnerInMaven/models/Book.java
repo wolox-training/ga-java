@@ -3,6 +3,7 @@ package com.wolox.trainnerInMaven.models;
 
 import com.google.common.base.Preconditions;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotBlank;
 import com.wolox.trainnerInMaven.exceptions.BookAlreadyOwnedException;
 import com.wolox.trainnerInMaven.exceptions.BookNotOwnedException;
+import com.wolox.trainnerInMaven.models.DTOs.BookDTO;
 
 /** Represents a book.
  * @author German Asprino
@@ -65,6 +67,18 @@ public class Book {
     private List<User> users = new ArrayList<>();
 
     public Book(){}
+
+    public Book(BookDTO bookInfo) {
+        this.title = bookInfo.getTitle();
+        this.subtitle = bookInfo.getSubtitle();
+        this.year = bookInfo.getPublishDate();
+        this.isbn = bookInfo.getIsbn();
+        this.author = bookInfo.getAuthors()[0].getName();
+        this.publisher = bookInfo.getPublishers()[0].getName();
+        this.genre = "default_genre";
+        this.pages = bookInfo.getPages();
+        this.image = bookInfo.getImage();
+    }
 
     // Getters and setters:
 
