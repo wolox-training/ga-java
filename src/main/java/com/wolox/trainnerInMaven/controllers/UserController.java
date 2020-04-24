@@ -15,8 +15,11 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.Optional;
 
 /** Represents controller for User.
@@ -92,5 +95,12 @@ public class UserController {
         final User user = usersRepository.findById(userId).orElseThrow(() -> new UsersNotFoundException("User Not Found", new Exception()));
         user.removeBook(book);
         usersRepository.save(user);
+    }
+
+    @RequestMapping(value = "/username", method = RequestMethod.GET)
+    @ResponseBody
+    public String currentUserNameSimple(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        return principal.getName();
     }
 }
